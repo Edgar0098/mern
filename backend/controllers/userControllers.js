@@ -4,7 +4,7 @@ const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
 
 //Register User
-//route  DELETE/api/goals/:id
+//route  DELETE/api/comments/:id
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -84,6 +84,23 @@ const getMe = asyncHandler(async (req, res) => {
   })
 });
 
+const updateUser = asyncHandler(async (req, res) => {
+  //res.json({ messsage: "User data display" });
+  console.log(req.params.id, "param id");
+  // const {_id,name,email} = await User.findById(req.user.id)
+
+  // res.status(200).json({
+  //   id:_id,
+  //   name,
+  //   email,
+  // })
+console.log(User)
+
+  const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+  res.status(200).json(updatedUser);
+});
+
+
 
 
 //Generate JWT
@@ -98,4 +115,5 @@ module.exports = {
   registerUser,
   loginUser,
   getMe,
+  updateUser
 };
